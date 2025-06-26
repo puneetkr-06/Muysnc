@@ -1,16 +1,27 @@
-import React from 'react'
+import React , {useState, useEffect} from 'react'
 import SongSlider from '../SongSlider/SongSlider'
+import axios from 'axios'
 
-const Charts = [
-{
-  title : 'Saga' , artist:'' , image : 'https://images.unsplash.com/photo-1598387993441-a364f854c3e1?q=80&w=1176&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-},
-]
+const TopCharts = ({setCurrentSong}) => {
 
-const TopCharts = () => {
+  const [charts, setCharts] = useState([]);
+  
+  useEffect(() => {
+    const fetchTopCharts = async () => {
+      try {
+        const res = await axios.get("http://localhost:4000/musync/top-charts"); // Replace with your actual route
+        setCharts(res.data.topCharts || []);
+      } catch (err) {
+        console.error("Failed to fetch Top Charts:", err);
+      }
+    };
+
+    fetchTopCharts();
+  }, []);
+
   return (
     <div>
-      <SongSlider title='Top Charts' songs={Charts} ></SongSlider>
+      <SongSlider title='Top Charts' songs={charts} setCurrentSong={setCurrentSong}></SongSlider>
     </div>
   )
 }

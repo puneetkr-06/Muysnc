@@ -7,6 +7,20 @@ import 'swiper/css/navigation';
 
 const SongSlider = ({ title, songs , setCurrentSong}) => {
             if (!songs) return null;
+     
+ const truncateText = (input, maxLength = 25) => {
+  if (!input) return "";
+
+  // If input is an array (like artists), join it into a single string
+  const text = Array.isArray(input) ? input.join(", ") : input;
+
+  // Ensure it's a string and truncate
+  return typeof text === 'string' && text.length > maxLength
+    ? text.slice(0, maxLength) + "..."
+    : text;
+};
+
+
   return (
     <div className="px-6 py-4">
       <h2 className="text-white text-xl font-semibold mb-4 font-ibm pl-2">{title}</h2>
@@ -46,8 +60,8 @@ const SongSlider = ({ title, songs , setCurrentSong}) => {
         </div>
 
 </div>
-      <h3 className="text-md font-bold">{song.name}</h3>
-      <p className="text-sm text-gray-400">{song.artists}</p>
+      <h3 className="text-md font-bold truncate">{truncateText(song.name)}</h3>
+      <p className="text-sm text-gray-400">{truncateText(song.artists)}</p>
     </div>
 
           </SwiperSlide>

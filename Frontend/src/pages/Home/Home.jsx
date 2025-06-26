@@ -24,7 +24,7 @@ const Home = () => {
         <Navbar></Navbar>
         <Banner setCurrentSong={setCurrentSong}></Banner>
         <RecentlyPlayed setCurrentSong={setCurrentSong}></RecentlyPlayed>
-        <TopCharts></TopCharts>
+        <TopCharts setCurrentSong={setCurrentSong}></TopCharts>
         <TopStreamedArtists></TopStreamedArtists>
         <BiggestHits></BiggestHits>
         <Playbar song={currentSong}></Playbar>
