@@ -1,0 +1,37 @@
+    .swiper-button-prev,
+    .swiper-button-next {
+      width: 32px;
+      height: 32px;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 9999px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px !important;
+      color: white;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+    }
+
+    .swiper-button-prev::after,
+    .swiper-button-next::after {
+      font-size: 16px !important;  /* Smaller arrow */
+      font-weight: bold;
+    }
+
+    .swiper-button-prev {
+      left: 12px;
+    }
+
+    .swiper-button-next {
+      right: 12px;
+    }
+    .swiper-button-prev:hover,
+.swiper-button-next:hover {
+  background-color: rgba(235, 108, 24, 0.8);
+}
+
+
+
+

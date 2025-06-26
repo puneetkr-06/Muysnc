@@ -1,0 +1,67 @@
+.playbar-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  background: rgb(0,0,0);
+  padding: 0.5rem 2rem;
+  z-index: 100;
+  box-shadow: 0 -2px 16px rgba(0,0,0,0.2);
+}
+
+.playbar-btn {
+  background: #EB6C18;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.playbar-btn:hover {
+  background: #252525;
+}
+
+.playbar-song-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  margin: 0 1rem;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.playbar-song-info {
+  flex: 1;
+  min-width: 0;
+  color: #fff;
+  margin-right: 1rem;
+}
+
+.playbar-song-name {
+  font-weight: bold;
+  font-size: 1.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.playbar-artist-name {
+  font-size: 0.95rem;
+  color: #aaa;
+}
+
+.playbar-progress {
+  width: 180px;
+  margin: 0 1rem;
+  accent-color: #EB6C18;
+}
+
+.playbar-time {
+  color: #fff;
+  font-size: 1rem;
+  min-width: 70px;
+  text-align: right;
+}
