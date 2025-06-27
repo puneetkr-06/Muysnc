@@ -9,6 +9,18 @@ const Playbar = ({ song}) => {
   const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
 
+    const truncateText = (input, maxLength = 25) => {
+  if (!input) return "";
+
+  // If input is an array (like artists), join it into a single string
+  const text = Array.isArray(input) ? input.join(", ") : input;
+
+  // Ensure it's a string and truncate
+  return typeof text === 'string' && text.length > maxLength
+    ? text.slice(0, maxLength) + "..."
+    : text;
+};
+
   useEffect(() => {
     if (song && audioRef.current) {
       audioRef.current.currentTime = 0;
@@ -62,10 +74,14 @@ const Playbar = ({ song}) => {
         onEnded={() => setIsPlaying(false)}
       />
 <div className="flex items-center justify-center min-w-120 ">
-      <img src={song.image} alt="Song" className="playbar-song-img" />
+      <img src={song.image || song.album?.images[0]?.url} alt="Song" className="playbar-song-img" />
       <div className="playbar-song-info">
-        <div className="playbar-song-name">{song.name}</div>
-        <div className="playbar-artist-name">{song.artists}</div>
+        <div className="playbar-song-name">{truncateText(song.name)}</div>
+        <div className="playbar-artist-name">  {truncateText(
+    Array.isArray(song.artists)
+      ? song.artists.map((a) => a.name).join(", ")
+      : song.artists
+  )}</div>
       </div>
 </div>
       <div className="playbar-controls flex items-center justify-center gap-2">

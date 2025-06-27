@@ -4,7 +4,7 @@ require("dotenv").config();
 const getTopCharts = async (req, res) => {
   try {
     const playlistId = "37i9dQZF1DX0XUfTFmNBRM";
-    const url = `https://v1.nocodeapi.com/scholarschool1010/spotify/PrHjFAbLYwKdlEAX/playlists?id=${playlistId}`;
+    const url = `https://v1.nocodeapi.com/puneetweb/spotify/TObpKWitGOipDTEB/playlists?id=${playlistId}`;
 
     const response = await axios.get(url);
 

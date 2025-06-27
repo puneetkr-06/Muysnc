@@ -44,7 +44,7 @@ const SongSlider = ({ title, songs , setCurrentSong}) => {
 
               <div className='relative'>
       <img
-        src={song.image}
+        src={song.image || song.album?.images[0]?.url}
         alt={song.name}
         className="w-full h-44 object-cover rounded-lg mb-3"
       />
@@ -61,7 +61,11 @@ const SongSlider = ({ title, songs , setCurrentSong}) => {
 
 </div>
       <h3 className="text-md font-bold truncate">{truncateText(song.name)}</h3>
-      <p className="text-sm text-gray-400">{truncateText(song.artists)}</p>
+      <p className="text-sm text-gray-400">  {truncateText(
+    Array.isArray(song.artists)
+      ? song.artists.join(", ")
+      : song.artists
+  )} </p>
     </div>
 
           </SwiperSlide>

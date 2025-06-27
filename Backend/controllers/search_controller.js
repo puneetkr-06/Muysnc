@@ -1,17 +1,18 @@
+
+
 const axios = require("axios");
 require("dotenv").config();
 
-const getTrendingTracks = async (req, res) => {
+const getSearchItem = async (req, res) => {
   try {
-    const playlistId = "37i9dQZF1DX4ghkRUdIogy";
-    const url = `https://v1.nocodeapi.com/puneetweb/spotify/TObpKWitGOipDTEB/playlists?id=${playlistId}`;
+    const url = `https://v1.nocodeapi.com/puneetweb/spotify/TObpKWitGOipDTEB/search?q=${keyword}&type=track`;
 
     const response = await axios.get(url);
 
     const tracksy = response.data.tracks.items;
 
 
-    const trending = tracksy
+    const searchItems = tracksy
       .map((item) => {
         const track = item.track;
         if (!track || !track.preview_url) return null;
@@ -26,11 +27,11 @@ const getTrendingTracks = async (req, res) => {
       })
       .filter(Boolean);
 
-    res.status(200).json({ trending });
+    res.status(200).json({ topCharts });
   } catch (err) {
     console.error("Spotify Trending Error:", err.message);
     res.status(500).json({ error: "Failed to fetch trending songs" });
   }
 };
 
-module.exports = { getTrendingTracks };
+module.exports = { getSearchItem};

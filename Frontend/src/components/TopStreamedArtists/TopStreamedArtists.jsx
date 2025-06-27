@@ -1,15 +1,61 @@
-import React from 'react'
-import SongSlider from '../SongSlider/SongSlider'
+import React , {useEffect , useState} from 'react'
+import ArtistSlider from '../ArtistSlider/ArtistSilder';
+import axios from 'axios' 
+
 
 const TopStreamedArtists = () => {
 
-  const artists = [
-    { title: 'Best of Cupid', artist: '', image: 'https://images.unsplash.com/photo-1598387993441-a364f854c3e1?q=80&w=1176&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-  ]
+const artistNames = [
+  "Arijit Singh",
+  "Shreya Ghoshal",
+  "Talwiinder",
+  "Ed Sheeran",
+  "Justin Bieber",
+  "Raga",
+  "Raftaar",
+  "Honey Singh",
+  "Dua Lipa",
+  "Eminem"
+];
+
+
+const [artists, setArtists] = useState([]);
+
+  useEffect(() => {
+        const fetchArtists = async () => {
+      try {
+        const responses = await Promise.all(
+          artistNames.map(name =>
+            axios.get(`https://v1.nocodeapi.com/puneetweb/spotify/TObpKWitGOipDTEB/search?q=${encodeURIComponent(name)}&type=artist`)
+          )
+        );
+
+
+   const formatted = responses.map(res => {
+   const artist = res.data.artists.items[0]; 
+  return {
+    id: artist.id,
+    name: artist.name,
+    image: artist.images?.[0]?.url || ""
+  };
+   });
+
+        setArtists(formatted);
+      } catch (error) {
+        console.error("Error fetching artist spotlight data:", error);
+      }
+    };
+
+    fetchArtists();
+  }, []);
 
   return (
     <div>
-      <SongSlider title="Top Streamed Artists" songs={artists} />
+      <ArtistSlider title="Artist Spotlight"
+        artists={artists}
+  >
+      </ArtistSlider>
+
     </div>
   )
 }

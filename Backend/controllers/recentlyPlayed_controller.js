@@ -13,7 +13,7 @@ const recentlyPlayed = async (req, res) => {
     
     user.recentlyPlayed = user.recentlyPlayed.filter(Boolean);
      let updatedRecentlyPlayed = user.recentlyPlayed.filter(
-      (s) => s._id && s._id !== song._id
+      (s) => s.preview_url && s.preview_url !== song.preview_url
     );
 
     updatedRecentlyPlayed.unshift(song);
@@ -35,7 +35,7 @@ const getRecentlyPlayed = async (req, res) => {
   try {
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: "User not found" });
-
+   
     res.status(200).json({ recentlyPlayed: user.recentlyPlayed });
   } catch (error) {
     console.error("Error fetching recently played", error);

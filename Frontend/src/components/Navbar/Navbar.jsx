@@ -6,9 +6,10 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
 import {signOut} from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
-const Navbar = () => {
+const Navbar = ({ query, setQuery, setSearchResults }) => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState('Naam Daal le Bhai');
@@ -61,6 +62,21 @@ const Navbar = () => {
 };
 
 
+  const handleSearch = async () => {
+    if (!query) return;
+
+    window.history.pushState({}, '', `?search=${encodeURIComponent(query)}`);
+
+    try {
+      const res = await axios.get(
+        `https://v1.nocodeapi.com/puneetweb/spotify/TObpKWitGOipDTEB/search?q=${query}&type=track`
+      );
+      setSearchResults(res.data.tracks.items);
+    } catch (err) {
+      console.error("Search failed", err);
+    }
+  };
+
   return (
     <div className='fixed top-4 left-64 right-0 px-6 pt-2 z-50 flex justify-between' ref={dropdownRef}>
       <div className='search flex-1 max-w-xl relative'>
@@ -71,6 +87,9 @@ const Navbar = () => {
           type="text"
           placeholder="Search songs, artists, albums..."
           className="w-full pl-10 pr-4 py-2 rounded-xl bg-[#1e1e1e] text-white ring-2 ring-[#EB6C18] outline-none"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
         />
       </div>
 
