@@ -2,8 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import "./Playbar.css";
 import equalizerGif from "../../assets/sound_bar.gif";
 import { MdPlayArrow, MdPause, MdSkipNext,MdSkipPrevious } from 'react-icons/md';
+import { updateRecentlyPlayed } from "../../utils/updateRecentlyPlayed"; // Adjust the import path as necessary
 
 const Playbar = ({ song}) => {
+  const user = JSON.parse(localStorage.getItem("musync-user"));
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -12,6 +14,9 @@ const Playbar = ({ song}) => {
     const truncateText = (input, maxLength = 25) => {
   if (!input) return "";
 
+    if(user && song){
+             updateRecentlyPlayed(user._id,song);
+          }
   // If input is an array (like artists), join it into a single string
   const text = Array.isArray(input) ? input.join(", ") : input;
 

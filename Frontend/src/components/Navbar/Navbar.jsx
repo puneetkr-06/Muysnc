@@ -68,10 +68,8 @@ const Navbar = ({ query, setQuery, setSearchResults }) => {
     window.history.pushState({}, '', `?search=${encodeURIComponent(query)}`);
 
     try {
-      const res = await axios.get(
-        `https://v1.nocodeapi.com/puneetweb/spotify/TObpKWitGOipDTEB/search?q=${query}&type=track`
-      );
-      setSearchResults(res.data.tracks.items);
+    const res = await axios.get(`http://localhost:4000/musync/search?query=${query}`);
+    setSearchResults(res.data.tracks);
     } catch (err) {
       console.error("Search failed", err);
     }

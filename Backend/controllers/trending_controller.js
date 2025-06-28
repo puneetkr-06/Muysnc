@@ -4,7 +4,10 @@ require("dotenv").config();
 const getTrendingTracks = async (req, res) => {
   try {
     const playlistId = "37i9dQZF1DX4ghkRUdIogy";
-    const url = `https://v1.nocodeapi.com/puneetweb/spotify/TObpKWitGOipDTEB/playlists?id=${playlistId}`;
+
+    const user = process.env.NOCODE_USER;
+    const key = process.env.NOCODE_KEY;
+    const url = `https://v1.nocodeapi.com/${user}/spotify/${key}/playlists?id=${playlistId}`;
 
     const response = await axios.get(url);
 

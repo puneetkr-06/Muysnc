@@ -23,6 +23,15 @@ const Banner = ({setCurrentSong}) => {
         
       } catch (err) {
         console.error("Failed to load trending songs", err);
+
+            try {
+      const fallbackRes = await axios.get("https://raw.githubusercontent.com/puneetkr-06/MUSYNC-API/main/trending/trendingSongs.json");
+
+      setTrending(fallbackRes.data);
+
+    } catch (fallbackError) {
+      console.error("🔥 GitHub fallback failed too:", fallbackError.message);
+    }
       }
     };
     fetchTrending();
@@ -68,13 +77,8 @@ const Banner = ({setCurrentSong}) => {
                   <button
                     className="mt-24 bg-[#EB6C18] px-5 py-2 rounded-full text-white hover:bg-orange-600 transition font-medium"
                     onClick={() => {
-                      if (item.preview_url) {
-                        
+                      if (item.preview_url) {              
                         setCurrentSong(item);
-                        if(user && item){
-                        updateRecentlyPlayed(user._id,item);
-                        }
-
                       }
                       else alert("Preview not available");
                     }}
