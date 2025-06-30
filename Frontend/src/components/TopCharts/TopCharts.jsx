@@ -1,6 +1,8 @@
 import React , {useState, useEffect} from 'react'
 import SongSlider from '../SongSlider/SongSlider'
 import axios from 'axios'
+const baseUrl = import.meta.env.VITE_BACKEND_URL;
+
 
 const TopCharts = ({setCurrentSong}) => {
 
@@ -9,10 +11,19 @@ const TopCharts = ({setCurrentSong}) => {
   useEffect(() => {
     const fetchTopCharts = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/musync/top-charts"); // Replace with your actual route
+        const res = await axios.get(`${baseUrl}/musync/top-charts`); // Replace with your actual route
         setCharts(res.data.topCharts || []);
       } catch (err) {
         console.error("Failed to fetch Top Charts:", err);
+
+                    try {
+      const fallbackRes = await axios.get("https://raw.githubusercontent.com/puneetkr-06/MUSYNC-API/main/topCharts/topChartsSongs.json");
+
+      setCharts(fallbackRes.data);
+
+    } catch (fallbackError) {
+      console.error("🔥 GitHub fallback failed too:", fallbackError.message);
+    }
       }
     };
 

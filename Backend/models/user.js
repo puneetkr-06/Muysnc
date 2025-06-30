@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-  firebaseUid: { type: String, required: true, unique: true }, // 🔄 updated
+  firebaseUid: { type: String, required: true, unique: true }, 
   name: { type: String },
   email: { type: String, required: true },
-  photoURL: { type: String, default: "" }, // 🔄 updated
+  photoURL: { type: String, default: "" },
 
   accountType: {
     type: String,

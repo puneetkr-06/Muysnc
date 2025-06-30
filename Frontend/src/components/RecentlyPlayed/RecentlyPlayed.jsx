@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import SongSlider from '../SongSlider/SongSlider'
 import axios from 'axios'
+const baseUrl = import.meta.env.VITE_BACKEND_URL;
+
 
 const RecentlyPlayed = ({setCurrentSong}) => {
   const [songs, setSongs] = useState([]);
@@ -8,8 +10,13 @@ const RecentlyPlayed = ({setCurrentSong}) => {
 
   useEffect(() => {
     const fetchRecentlyPlayed = async () => {
+      if (!user?._id) {
+      console.error("User ID is null or undefined");
+      return;
+    }
       try {
-        const res = await axios.get(`http://localhost:4000/user/recent/${user._id}`);
+        const res = await axios.get(`${baseUrl}/user/recent/${user._id}`);
+        console.log("Recently Played Songs:", res.data.recentlyPlayed);
         setSongs(res.data.recentlyPlayed);
 
       } catch (err) {
@@ -17,14 +24,22 @@ const RecentlyPlayed = ({setCurrentSong}) => {
       }
     };
 
-    if (user._id) fetchRecentlyPlayed();
+    fetchRecentlyPlayed();
   }, [user]);
 
-  let title = "No Songs Played Yet";
-  if(songs.length > 0) title = "Recently Played";
+  let title = "Recently Played Songs";
+
+    if ( songs.length === 0) {
+    return (
+      <div className="px-6 py-2">
+        <h2 className="text-white text-md md:text-xl font-semibold mb-2 font-ibm pl-2">{title}</h2>
+        <p className="ml-4 text-sm text-gray-400">No Songs Played Yet</p>
+      </div>
+    );
+  }
 
   return (
-    <div className='mt-4'>
+    <div className='md:mt-4'>
       
       <SongSlider title={title} songs={songs} setCurrentSong={setCurrentSong}/>
     </div>

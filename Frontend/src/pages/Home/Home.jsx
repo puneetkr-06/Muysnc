@@ -5,9 +5,10 @@ import Banner from '../../components/Banner/Banner'
 import RecentlyPlayed from '../../components/RecentlyPlayed/RecentlyPlayed'
 import TopStreamedArtists from '../../components/TopStreamedArtists/TopStreamedArtists'
 import TopCharts from '../../components/TopCharts/TopCharts'
-import BiggestHits from '../../components/BiggestHits/BiggestHits'
+import TodayBiggestHits from '../../components/TodayBiggestHits/TodayBiggestHits'
 import Playbar from '../../components/Playbar/Playbar'
 import TrackCard from '../../components/TrackCard/TrackCard'
+import Footer from '../../components/Footer/Footer'
 
 const Home = () => {
 
@@ -30,22 +31,22 @@ const Home = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [query, setQuery] = useState("");
   return (
-    <div className='bg-[rgb(12,15,23)] min-h-screen bg-gradient-to-br from-[rgb(14,18,27)] via-[rgb(14,15,20)] to-[rgb(39,42,52)] pb-16'>
+    <div className='bg-[rgb(12,15,23)] min-h-screen bg-gradient-to-br from-[rgb(14,18,27)] via-[rgb(14,15,20)] to-[rgb(39,42,52)]'>
 
       {/* Left Part */}
-      <div className='p-2'>
+       <div className="w-full md:w-64 fixed md:relative z-20">
       <Sidebar setSearchResults={setSearchResults} setQuery={setQuery}></Sidebar>
       </div>
 
       {/* Right part */}
-      <div className='ml-16 sm:ml-48 md:ml-64 min-h-screen flex-1 pt-20'>
+      <div className='ml-16 sm:ml-40 md:ml-48 xl:ml-64 min-h-screen flex-1 pt-20'>
         <Navbar query={query} setQuery={setQuery} setSearchResults={setSearchResults}></Navbar>
 
         <div > 
   {searchResults.length > 0 ? (
     <div className="pb-24 px-4">
-      <h2 className="text-xl font-semibold mb-4 text-white">Search Results</h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <h2 className="text-sm font-medium md:text-xl md:font-semibold mb-4 text-white">Search Results</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
         {searchResults.map((track) => (
           <TrackCard track={track} key={track.id} setCurrentSong={setCurrentSong} />
         ))}
@@ -57,7 +58,8 @@ const Home = () => {
         <RecentlyPlayed setCurrentSong={setCurrentSong}></RecentlyPlayed>
         <TopCharts setCurrentSong={setCurrentSong}></TopCharts>
         <TopStreamedArtists></TopStreamedArtists>
-        <BiggestHits></BiggestHits>
+        <TodayBiggestHits setCurrentSong={setCurrentSong}></TodayBiggestHits>
+        <Footer></Footer>
     </>
   )}
 </div>

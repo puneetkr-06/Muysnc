@@ -9,6 +9,7 @@ import { auth , provider } from "../../firebase/firebase";
 import { signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+const baseUrl = import.meta.env.VITE_BACKEND_URL;
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -49,13 +50,12 @@ const handleSubmit = async (e) => {
   photoURL: userCredential.user.photoURL || "",
 };
 
-await axios.post("http://localhost:4000/user/register", userData)
+await axios.post(`${baseUrl}/user/register`, userData)
   .then((res) => {
     const user = res.data.user; 
     localStorage.setItem("musync-user", JSON.stringify(user)); 
-  });
-
     navigate('/home')
+  });
   } catch (error) {
     console.error("Signup Error:", error.message);
     alert("Error in Signup!");
@@ -76,12 +76,12 @@ const handleGoogleSignup = async () => {
       photoURL: user.photoURL || "",
     };
 
-await axios.post("http://localhost:4000/user/register", userData)
+await axios.post(`${baseUrl}/user/register`, userData)
   .then((res) => {
     const user = res.data.user; 
     localStorage.setItem("musync-user", JSON.stringify(user)); 
-  });
     navigate("/home");
+  });
   } catch (error) {
     console.error("Google signup error:", error.message);
     alert("Error with Google Signup!");

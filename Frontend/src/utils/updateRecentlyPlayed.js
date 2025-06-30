@@ -1,6 +1,11 @@
 import axios from "axios";
+const baseUrl = import.meta.env.VITE_BACKEND_URL;
+
 
 export const updateRecentlyPlayed = async (userId, item) => {
+    if(userId === null || userId === undefined) {
+        console.error("User ID is null or undefined");  
+    }
   try {
     const simplifiedSong = {
       name: item.name,
@@ -10,7 +15,7 @@ export const updateRecentlyPlayed = async (userId, item) => {
       image: item.album?.images[0]?.url || item.image,
       preview_url: item.preview_url,
     };
-    const res = await axios.post("http://localhost:4000/user/recent", {
+    const res = await axios.post(`${baseUrl}/user/recent`, {
       userId ,
       song : simplifiedSong,
     });

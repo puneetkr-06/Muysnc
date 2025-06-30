@@ -7,8 +7,19 @@ import Playbar from "../Playbar/Playbar";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { updateRecentlyPlayed } from "../../utils/updateRecentlyPlayed"; 
+const baseUrl = import.meta.env.VITE_BACKEND_URL;
 
+const truncateText = (input, maxLength = 25) => {
+  if (!input) return "";
+
+  // If input is an array (like artists), join it into a single string
+  const text = Array.isArray(input) ? input.join(", ") : input;
+
+  // Ensure it's a string and truncate
+  return typeof text === 'string' && text.length > maxLength
+    ? text.slice(0, maxLength) + "..."
+    : text;
+};
 
 const Banner = ({setCurrentSong}) => {
   const user = JSON.parse(localStorage.getItem("musync-user"));
@@ -18,7 +29,7 @@ const Banner = ({setCurrentSong}) => {
   useEffect(() => {
     const fetchTrending = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/musync/trending");
+        const res = await axios.get(`${baseUrl}/musync/trending`);
         setTrending(res.data.trending);
         
       } catch (err) {
@@ -39,7 +50,7 @@ const Banner = ({setCurrentSong}) => {
 
   return (
     <div>
-      <h1 className="font-ibm font-bold text-2xl text-white pl-6">Trending Now !</h1>
+      <h1 className="font-ibm font-bold text-xl md:text-2xl text-white pl-6">Trending Now !</h1>
       <div className="w-full px-4 py-4">
         <Swiper
           modules={[Navigation, Pagination, Autoplay]}
@@ -66,16 +77,28 @@ const Banner = ({setCurrentSong}) => {
           {trending.slice(0, 10).map((item, index) => (
             <SwiperSlide key={index}>
               <div
-                className="flex flex-col md:flex-row items-center justify-between bg-[#1e1e1e] p-6 md:p-10 rounded-2xl shadow-lg bg-center"
+                className="flex flex-col md:flex-row items-center justify-between bg-[#1e1e1e] xl:pl-80 p-6 md:p-10 rounded-2xl shadow-lg bg-center "
                 style={{ backgroundImage: `url(${banner_bg})` }}
               >
                 {/* Left Side: Details */}
-                <div className="flex-1 text-white space-y-4 ml-80">
-                  <h2 className="text-3xl font-ibm font-semibold">{item.name}</h2>
-                  <p className="text-[#ffbb56] font-medium">By {item.artists}</p>
-  
-                  <button
-                    className="mt-24 bg-[#EB6C18] px-5 py-2 rounded-full text-white hover:bg-orange-600 transition font-medium"
+                <div className="flex-1 text-white space-y-2 md:space-y-4 w-full md:w-1/2">
+                  <h2 className="text-xl md:text-3xl font-ibm font-semibold">{truncateText(item.name)}</h2>
+                  <p className="text-[#ffbb56] font-xs md:font-medium">By {truncateText(item.artists)}</p>
+
+
+                </div>
+ <div className="flex flex-col items-center justify-center w-full md:w-1/2">
+                {/* Right Side: Image */}
+                <div className="flex h-full md:w-[300px] md:h-[300px] mt-4 md:mt-0 md:ml-10 rounded-xl overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full md:h-full object-cover rounded-xl "
+                  />
+                </div>
+                                  <button
+                    className="mt-2 md:mt-6  sm:ml-6 
+                   sm:mt-6 sm:mb-2 xl:px-8 xl:text-xl bg-[#EB6C18] px-4 py-2 rounded-full text-white hover:bg-orange-600 transition font-medium "
                     onClick={() => {
                       if (item.preview_url) {              
                         setCurrentSong(item);
@@ -85,16 +108,8 @@ const Banner = ({setCurrentSong}) => {
                   >
                     Listen Now
                   </button>
-                </div>
-
-                {/* Right Side: Image */}
-                <div className="flex-shrink-0 w-full md:w-[300px] h-[300px] mt-6 md:mt-0 md:ml-10 rounded-xl overflow-hidden">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-full h-full object-cover rounded-xl"
-                  />
-                </div>
+                
+                  </div>
               </div>
             </SwiperSlide>
           ))}

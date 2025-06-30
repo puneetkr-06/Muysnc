@@ -25,11 +25,11 @@ const TrackCard = ({ track , setCurrentSong }) => {
           <img
             src={track.album?.images[0]?.url}
             alt={track.name}
-            className="w-full h-48 object-cover rounded-lg mb-3"
+            className="w-full h-32 md:h-44 object-cover rounded-lg mb-3"
           />
     
-            <div className="absolute inset-0 bg-opacity-30 rounded-lg hidden group-hover:flex items-center justify-center transition">
-              <button className="bg-[#EB6C18] text-white p-3 rounded-full hover:scale-110 transition"
+            <div className="absolute inset-0 bg-opacity-30 rounded-lg flex items-center justify-center opacity-100 group-hover:opacity-100 sm:opacity-0 transition">
+              <button className="bg-[#EB6C18] text-white p-3 rounded-full items-center hover:scale-110 transition"
                 onClick={async () => {
     const storedUser = JSON.parse(localStorage.getItem("musync-user"));
     const userId = storedUser?._id;
@@ -48,8 +48,8 @@ const TrackCard = ({ track , setCurrentSong }) => {
             </div>
     
     </div>
-          <h3 className="text-md font-bold truncate">{truncateText(track.name)}</h3>
-          <p className="text-sm text-gray-400">{truncateText(track.artists.map((a) => a.name))}</p>
+          <h3 className="text-sm md:text-base font-semibold md:font-bold truncate">{truncateText(track.name)}</h3>
+          <p className="text-xs md:text-sm text-gray-400">{truncateText(track.artists.map((a) => a.name))}</p>
         </div>
     
   );

@@ -23,33 +23,28 @@ const SongSlider = ({ title, songs , setCurrentSong}) => {
 
   return (
     <div className="px-6 py-4">
-      <h2 className="text-white text-xl font-semibold mb-4 font-ibm pl-2">{title}</h2>
+      <h2 className="text-white text-md md:text-xl font-semibold mb-4 font-ibm pl-2">{title}</h2>
 
       <Swiper
         spaceBetween={20}
-        slidesPerView={2}
-        breakpoints={{
-          640: { slidesPerView: 3 },
-          768: { slidesPerView: 4 },
-          1024: { slidesPerView: 5 },
-        }}
+        slidesPerView="auto"
         navigation
         modules={[Navigation]}
       >
         {songs.map((song, idx) => (
           
-          <SwiperSlide key={idx}>
+          <SwiperSlide key={idx} className="!w-[200px] md:!w-[220px] xl:!w-[240px]">
             
-             <div className="relative group bg-[#1e1e1e] rounded-xl p-3 text-white hover:scale-105 transition-transform duration-300 shadow-md cursor-pointer w-full">
+             <div className="relative group bg-[#1e1e1e] rounded-xl p-3 text-white hover:scale-105 transition-transform duration-300 shadow-md cursor-pointer">
 
               <div className='relative'>
       <img
-        src={song.image || song.album?.images[0]?.url}
+        src={song?.image || song?.album?.images[0]?.url}
         alt={song.name}
-        className="w-full h-44 object-cover rounded-lg mb-3"
+        className="w-full h-32 md:h-44 object-cover rounded-lg mb-3"
       />
 
-        <div className="absolute inset-0 bg-opacity-30 rounded-lg hidden group-hover:flex items-center justify-center transition">
+        <div className="absolute inset-0 bg-opacity-30 rounded-lg flex items-center justify-center  opacity-100 group-hover:opacity-100 sm:opacity-0 transition">
           <button className="bg-[#EB6C18] text-white p-3 rounded-full hover:scale-110 transition"
           onClick={() => {
             setCurrentSong(song);
@@ -60,8 +55,8 @@ const SongSlider = ({ title, songs , setCurrentSong}) => {
         </div>
 
 </div>
-      <h3 className="text-md font-bold truncate">{truncateText(song.name)}</h3>
-      <p className="text-sm text-gray-400">  {truncateText(
+      <h3 className="text-sm md:text-base font-semibold md:font-bold truncate">{truncateText(song.name)}</h3>
+      <p className="text-xs md:text-sm text-gray-400">  {truncateText(
     Array.isArray(song.artists)
       ? song.artists.join(", ")
       : song.artists

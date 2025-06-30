@@ -15,7 +15,10 @@ connectToDb();
 app.get('/', (req,res)=> {
   res.send("Hello World");
 })
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:5173", "http://192.168.9.253"], // 
+  credentials: true
+}));
 
 
 app.use('/user',userRoutes);

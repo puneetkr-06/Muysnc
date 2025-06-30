@@ -7,12 +7,14 @@ import { auth } from "../../firebase/firebase";
 import {signOut} from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+const baseUrl = import.meta.env.VITE_BACKEND_URL;
+
 
 
 const Navbar = ({ query, setQuery, setSearchResults }) => {
   const navigate = useNavigate();
 
-  const [user, setUser] = useState('Naam Daal le Bhai');
+  const [user, setUser] = useState(null);
    useEffect(() => {
   const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
     if (currentUser) {
@@ -68,16 +70,17 @@ const Navbar = ({ query, setQuery, setSearchResults }) => {
     window.history.pushState({}, '', `?search=${encodeURIComponent(query)}`);
 
     try {
-    const res = await axios.get(`http://localhost:4000/musync/search?query=${query}`);
-    setSearchResults(res.data.tracks);
+    const res = await axios.get(`${baseUrl}/musync/search?query=${query}`);
+    const filteredTracks = res.data.tracks.filter(track => track.preview_url);
+    setSearchResults(filteredTracks);
     } catch (err) {
       console.error("Search failed", err);
     }
   };
 
   return (
-    <div className='fixed top-4 left-64 right-0 px-6 pt-2 z-50 flex justify-between' ref={dropdownRef}>
-      <div className='search flex-1 max-w-xl relative'>
+    <div className='fixed top-4 left-16 sm:left-40 md:left-64 right-0 px-6 pt-2 z-50 flex justify-between' ref={dropdownRef}>
+      <div className=' w-full search flex-1 md:max-w-xl relative'>
           <span className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-400">
           <FiSearch size={18} />
         </span>
@@ -102,7 +105,7 @@ const Navbar = ({ query, setQuery, setSearchResults }) => {
             className="h-12 w-12 rounded-full object-cover"
           />
           <div className="text-md leading-tight hidden sm:block">
-            <p className="font-semibold text-[#EB6C18]">{user.displayName}</p>
+            <p className="font-semibold text-[#EB6C18]">{user?.displayName || "User name"}</p>
             <p className="text-sm text-gray-400">{dummy.accountType} Account</p>
           </div>
           <MdArrowDropDown className="text-xl text-white" />
