@@ -16,7 +16,6 @@ const RecentlyPlayed = ({setCurrentSong}) => {
     }
       try {
         const res = await axios.get(`${BASE_URL}/user/recent/${user._id}`);
-        console.log("Recently Played Songs:", res.data.recentlyPlayed);
         setSongs(res.data.recentlyPlayed);
 
       } catch (err) {

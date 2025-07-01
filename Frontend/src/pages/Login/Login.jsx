@@ -29,7 +29,6 @@ const Login = () => {
 
     try {
       const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
-      console.log("User logged in:", userCredential.user);
          
  const firebaseUser = userCredential.user;
 const userData = {
@@ -73,8 +72,6 @@ const userData = {
 
     
     localStorage.setItem("musync-user", JSON.stringify(res.data.user));
-
-    console.log("Logged in with Google:", res.data.user);
   } catch (err) {
     console.error("Google login error:", err);
   }

@@ -38,7 +38,6 @@ const handleSubmit = async (e) => {
         await updateProfile(userCredential.user, {
       displayName: formData.name,
     });
-    console.log("User signed up:", userCredential.user);
     alert("Signup Successful!");
 
     const userData = {
