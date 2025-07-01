@@ -15,11 +15,6 @@ connectToDb();
 app.get('/', (req,res)=> {
   res.send("Hello World");
 })
-app.use(cors({
-  origin: ['*'], // 
-  credentials: true
-}));
-
 
 app.use('/user',userRoutes);
 app.use('/musync', spotifyRoutes);
