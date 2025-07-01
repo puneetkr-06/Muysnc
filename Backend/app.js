@@ -5,7 +5,6 @@ const app = express();
 const cors = require('cors');
 const axios = require("axios");
 const connectToDb = require('./db/db');
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
 const userRoutes = require('./routes/user_route');
@@ -15,6 +14,10 @@ connectToDb();
 app.get('/', (req,res)=> {
   res.send("Hello World");
 })
+app.use(cors({
+  origin: 'https://muysnc.onrender.com'  
+}));
+
 
 app.use('/user',userRoutes);
 app.use('/musync', spotifyRoutes);
