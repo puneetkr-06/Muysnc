@@ -54,7 +54,6 @@ const Navbar = ({ query, setQuery, setSearchResults }) => {
   const handleLogout = async () => {
   try {
     await signOut(auth);
-    alert("Logged out successfully");
     // Redirect to login or home
     navigate("/login");
   } catch (error) {
