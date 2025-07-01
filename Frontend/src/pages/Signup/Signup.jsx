@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import logo from '../../assets/logo.png'
+import { FaCompactDisc } from 'react-icons/fa';
 import {Link} from 'react-router-dom'
 import { createUserWithEmailAndPassword , GoogleAuthProvider, updateProfile} from "firebase/auth";
 import { auth , provider } from "../../firebase/firebase";
@@ -93,7 +93,7 @@ await axios.post(`${baseUrl}/user/register`, userData)
     <div className='min-h-screen bg-gradient-to-br from-[#0e121b] via-[#0e0f14] to-[#272a34] flex flex-col gap-8'>
 
             <div className='flex p-4 items-center'>
-               <img src={logo} className='h-15 w-20 mr-2' alt='logo'></img>
+               < FaCompactDisc  className='text-[#EB6C18] bold text-3xl mr-2 animate-spin'/>
                <h1 className='text-[#EB6C18] text-3xl font-ibm font-bold justify-center items-center hidden sm:block'>Musync</h1>
               </div>
 

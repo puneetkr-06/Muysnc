@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import axios from 'axios'
 import { FcGoogle } from 'react-icons/fc';
-import logo from '../../assets/logo.png';
+import {FaCompactDisc} from 'react-icons/fa';
 import {Link} from 'react-router-dom'
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth ,provider } from '../../firebase/firebase';
@@ -87,7 +87,7 @@ const userData = {
 
       {/* Logo Top */}
       <div className='flex p-4 items-center'>
-        <img src={logo} className='h-15 w-20 mr-2' alt='logo' />
+        < FaCompactDisc  className='text-[#EB6C18] bold text-3xl mr-2 animate-spin'/>
         <h1 className='text-[#EB6C18] text-3xl font-ibm font-bold hidden sm:block'>Musync</h1>
       </div>
 

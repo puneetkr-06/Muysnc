@@ -16,6 +16,14 @@ const [artists, setArtists] = useState([]);
         setArtists(res.data.artists);
       } catch (error) {
         console.error("Error fetching artist spotlight data:", error);
+                    try {
+              const fallbackRes = await axios.get("https://raw.githubusercontent.com/puneetkr-06/MUSYNC-API/main/topArtists/getTopArtists.json");
+        
+              setArtists(fallbackRes.data.artists);
+        
+            } catch (fallbackError) {
+              console.error("🔥 GitHub fallback failed too:", fallbackError.message);
+            }
       }
     };
 

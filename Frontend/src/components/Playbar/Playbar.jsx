@@ -25,6 +25,7 @@ const Playbar = ({ song }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
+      const isMobile = useIsMobile(); 
 
   const [liked, setLiked] = useState(false);
 
@@ -39,10 +40,18 @@ const Playbar = ({ song }) => {
   useEffect(() => {
     if (song && audioRef.current) {
       audioRef.current.currentTime = 0;
+
+           const isMobileDevice = /Mobi|Android/i.test(navigator.userAgent);
+    if (isMobileDevice) {
+      audioRef.current.play().then(() => {
+        setIsPlaying(true);
+      }).catch((err) => {
+        console.warn("Autoplay blocked on desktop:", err);
+      });
+    }
+
       audioRef.current.play();
       setIsPlaying(true);
-
-        const isMobile = useIsMobile(); 
 
       if (user && song) {
         updateRecentlyPlayed(user._id, song);
@@ -102,7 +111,7 @@ const Playbar = ({ song }) => {
             <img src={song.image || song.album?.images?.[0]?.url} alt="Song" className="w-10 h-10 rounded-lg" />
             <div>
               <p className="text-sm text-white font-medium">{truncateText(song.name, 20)}</p>
-              <p className="text-xs text-gray-400">{truncateText(song.artists, 20)}</p>
+              <p className="text-xs text-gray-400"> {truncateText(Array.isArray(song.artists) ? song.artists.map((a) => a.name).join(", ") : song.artists)}</p>
             </div>
           </div>
 
@@ -123,7 +132,7 @@ const Playbar = ({ song }) => {
           <div className="flex items-center justify-center  md:min-w-60  xl:min-w-120">
             <img src={song.image || song.album?.images[0]?.url} alt="Song" className="playbar-song-img" />
             <div className="playbar-song-info">
-              <div className="playbar-song-name">{truncateText(song.name)}</div>
+              <div className="playbar-song-name">{truncateText(song.name)}</div  >
               <div className="playbar-artist-name">
                 {truncateText(Array.isArray(song.artists) ? song.artists.map((a) => a.name).join(", ") : song.artists)}
               </div>

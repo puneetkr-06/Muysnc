@@ -9,8 +9,20 @@ import TodayBiggestHits from '../../components/TodayBiggestHits/TodayBiggestHits
 import Playbar from '../../components/Playbar/Playbar'
 import TrackCard from '../../components/TrackCard/TrackCard'
 import Footer from '../../components/Footer/Footer'
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../firebase/firebase';
+import { Navigate } from 'react-router-dom';
 
 const Home = () => {
+
+    const [user, loading] = useAuthState(auth);
+
+  if (loading) return <div className="text-white p-10">Loading...</div>;
+
+  if (!user) {
+    alert("Please login to continue");
+    return <Navigate to="/login" replace />;
+  }
 
   useEffect(() => {
   const handleBackButton = () => {
