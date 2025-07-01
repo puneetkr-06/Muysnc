@@ -1,4 +1,3 @@
-// src/pages/Landing/Landing.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaMusic, FaStar, FaDownload, FaHeadphones, FaCompactDisc } from 'react-icons/fa';

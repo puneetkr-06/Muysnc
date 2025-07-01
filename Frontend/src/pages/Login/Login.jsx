@@ -1,5 +1,3 @@
-// src/pages/Login.jsx
-
 import React, { useState } from 'react';
 import axios from 'axios'
 import { FcGoogle } from 'react-icons/fc';

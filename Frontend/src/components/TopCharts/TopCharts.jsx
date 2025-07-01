@@ -11,7 +11,7 @@ const TopCharts = ({setCurrentSong}) => {
   useEffect(() => {
     const fetchTopCharts = async () => {
       try {
-        const res = await axios.get(`${baseUrl}/musync/top-charts`); // Replace with your actual route
+        const res = await axios.get(`${baseUrl}/musync/top-charts`); 
         setCharts(res.data.topCharts || []);
       } catch (err) {
         console.error("Failed to fetch Top Charts:", err);

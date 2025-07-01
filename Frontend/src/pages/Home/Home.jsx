@@ -77,7 +77,6 @@ const Home = () => {
 </div>
 
         <Playbar song={currentSong}></Playbar>
-        {/* <Temp></Temp> */}
       </div>
 
 

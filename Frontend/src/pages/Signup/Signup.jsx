@@ -1,5 +1,3 @@
-// src/pages/Signup.jsx
-
 import React, { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { FaCompactDisc } from 'react-icons/fa';

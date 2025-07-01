@@ -10,10 +10,8 @@ const TrackCard = ({ track , setCurrentSong }) => {
   const truncateText = (input, maxLength = 25) => {
   if (!input) return "";
 
-  // If input is an array (like artists), join it into a single string
   const text = Array.isArray(input) ? input.join(", ") : input;
 
-  // Ensure it's a string and truncate
   return typeof text === 'string' && text.length > maxLength
     ? text.slice(0, maxLength) + "..."
     : text;
