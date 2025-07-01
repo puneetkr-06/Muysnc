@@ -1,5 +1,5 @@
 import axios from "axios";
-import {baseUrl} from "./config"
+import {BASE_URL} from "./config"
 
 
 export const updateRecentlyPlayed = async (userId, item) => {
@@ -15,7 +15,7 @@ export const updateRecentlyPlayed = async (userId, item) => {
       image: item.album?.images[0]?.url || item.image,
       preview_url: item.preview_url,
     };
-    const res = await axios.post(`${baseUrl}/user/recent`, {
+    const res = await axios.post(`${BASE_URL}/user/recent`, {
       userId ,
       song : simplifiedSong,
     });

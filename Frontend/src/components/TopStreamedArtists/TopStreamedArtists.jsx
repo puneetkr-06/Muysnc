@@ -1,7 +1,7 @@
 import React , {useEffect , useState} from 'react'
 import ArtistSlider from '../ArtistSlider/ArtistSilder';
 import axios from 'axios' 
-import {baseUrl} from "../../utils/config"
+import {BASE_URL} from "../../utils/config"
 
 
 
@@ -12,7 +12,7 @@ const [artists, setArtists] = useState([]);
   useEffect(() => {
     const fetchArtists = async () => {
       try {
-        const res = await axios.get(`${baseUrl}/musync/artists`);
+        const res = await axios.get(`${BASE_URL}/musync/artists`);
         setArtists(res.data.artists);
       } catch (error) {
         console.error("Error fetching artist spotlight data:", error);

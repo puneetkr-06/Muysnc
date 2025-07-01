@@ -1,1 +1,1 @@
-export const base_Url = "https://musync-backend.onrender.com";
+export const BASE_URL = "https://musync-backend.onrender.com";

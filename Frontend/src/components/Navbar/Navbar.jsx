@@ -7,7 +7,7 @@ import { auth } from "../../firebase/firebase";
 import {signOut} from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import {baseUrl} from "../../utils/config"
+import {BASE_URL} from "../../utils/config"
 
 
 
@@ -70,7 +70,7 @@ const Navbar = ({ query, setQuery, setSearchResults }) => {
     window.history.pushState({}, '', `?search=${encodeURIComponent(query)}`);
 
     try {
-    const res = await axios.get(`${baseUrl}/musync/search?query=${query}`);
+    const res = await axios.get(`${BASE_URL}/musync/search?query=${query}`);
     const filteredTracks = res.data.tracks.filter(track => track.preview_url);
     setSearchResults(filteredTracks);
     } catch (err) {

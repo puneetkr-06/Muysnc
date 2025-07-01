@@ -7,7 +7,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth ,provider } from '../../firebase/firebase';
 import { signInWithPopup } from 'firebase/auth';
 import {useNavigate} from 'react-router-dom';
-import {baseUrl} from "../../utils/config"
+import {BASE_URL} from "../../utils/config"
 
 
 
@@ -39,7 +39,7 @@ const userData = {
   photoURL: firebaseUser.photoURL || '',
 };
 
-    axios.post(`${baseUrl}/user/login`, userData)
+    axios.post(`${BASE_URL}/user/login`, userData)
       .then((res) => {
         const user = res.data.user;
         localStorage.setItem("musync-user", JSON.stringify(user));
@@ -69,7 +69,7 @@ const userData = {
 };
 
     
-    const res = await axios.post(`${baseUrl}/user/login`, userData);
+    const res = await axios.post(`${BASE_URL}/user/login`, userData);
 
     
     localStorage.setItem("musync-user", JSON.stringify(res.data.user));

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import SongSlider from '../SongSlider/SongSlider'
 import axios from 'axios'
-import {baseUrl} from "../../utils/config"
+import {BASE_URL} from "../../utils/config"
 
 
 const RecentlyPlayed = ({setCurrentSong}) => {
@@ -15,7 +15,7 @@ const RecentlyPlayed = ({setCurrentSong}) => {
       return;
     }
       try {
-        const res = await axios.get(`${baseUrl}/user/recent/${user._id}`);
+        const res = await axios.get(`${BASE_URL}/user/recent/${user._id}`);
         console.log("Recently Played Songs:", res.data.recentlyPlayed);
         setSongs(res.data.recentlyPlayed);
 

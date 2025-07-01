@@ -7,7 +7,7 @@ import { auth , provider } from "../../firebase/firebase";
 import { signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import {baseUrl} from "../../utils/config"
+import {BASE_URL} from "../../utils/config"
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ const handleSubmit = async (e) => {
   photoURL: userCredential.user.photoURL || "",
 };
 
-await axios.post(`${baseUrl}/user/register`, userData)
+await axios.post(`${BASE_URL}/user/register`, userData)
   .then((res) => {
     const user = res.data.user; 
     localStorage.setItem("musync-user", JSON.stringify(user)); 
@@ -74,7 +74,7 @@ const handleGoogleSignup = async () => {
       photoURL: user.photoURL || "",
     };
 
-await axios.post(`${baseUrl}/user/register`, userData)
+await axios.post(`${BASE_URL}/user/register`, userData)
   .then((res) => {
     const user = res.data.user; 
     localStorage.setItem("musync-user", JSON.stringify(user)); 

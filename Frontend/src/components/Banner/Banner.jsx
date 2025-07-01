@@ -7,7 +7,7 @@ import Playbar from "../Playbar/Playbar";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import {baseUrl} from "../../utils/config"
+import {BASE_URL} from "../../utils/config"
 
 const truncateText = (input, maxLength = 25) => {
   if (!input) return "";
@@ -29,7 +29,7 @@ const Banner = ({setCurrentSong}) => {
   useEffect(() => {
     const fetchTrending = async () => {
       try {
-        const res = await axios.get(`${baseUrl}/musync/trending`);
+        const res = await axios.get(`${BASE_URL}/musync/trending`);
         setTrending(res.data.trending);
         
       } catch (err) {
