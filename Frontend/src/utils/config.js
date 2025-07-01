@@ -1,0 +1,1 @@
+export const base_Url = "https://musync-backend.onrender.com";

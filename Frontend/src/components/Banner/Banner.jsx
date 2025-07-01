@@ -7,7 +7,7 @@ import Playbar from "../Playbar/Playbar";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-const baseUrl = import.meta.env.VITE_BACKEND_URL;
+import {baseUrl} from "../../utils/config"
 
 const truncateText = (input, maxLength = 25) => {
   if (!input) return "";

@@ -7,7 +7,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth ,provider } from '../../firebase/firebase';
 import { signInWithPopup } from 'firebase/auth';
 import {useNavigate} from 'react-router-dom';
-const baseUrl = import.meta.env.VITE_BACKEND_URL;
+import {baseUrl} from "../../utils/config"
 
 
 

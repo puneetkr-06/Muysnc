@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import SongSlider from '../SongSlider/SongSlider'
 import axios from 'axios'
-const baseUrl = import.meta.env.VITE_BACKEND_URL;
+import {baseUrl} from "../../utils/config"
 
 
 const RecentlyPlayed = ({setCurrentSong}) => {

@@ -7,7 +7,7 @@ import { auth , provider } from "../../firebase/firebase";
 import { signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-const baseUrl = import.meta.env.VITE_BACKEND_URL;
+import {baseUrl} from "../../utils/config"
 
 const Signup = () => {
   const navigate = useNavigate();

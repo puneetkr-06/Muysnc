@@ -1,7 +1,7 @@
 import React , {useEffect , useState} from 'react'
 import ArtistSlider from '../ArtistSlider/ArtistSilder';
 import axios from 'axios' 
-const baseUrl = import.meta.env.VITE_BACKEND_URL;
+import {baseUrl} from "../../utils/config"
 
 
 

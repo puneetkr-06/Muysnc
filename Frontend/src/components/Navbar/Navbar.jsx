@@ -7,7 +7,7 @@ import { auth } from "../../firebase/firebase";
 import {signOut} from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-const baseUrl = import.meta.env.VITE_BACKEND_URL;
+import {baseUrl} from "../../utils/config"
 
 
 
