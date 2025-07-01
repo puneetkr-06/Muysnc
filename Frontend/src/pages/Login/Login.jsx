@@ -60,7 +60,7 @@ const userData = {
 
     if (!user) throw new Error("No user returned from Google");
 
-const firebaseUser = userCredential.user;
+const firebaseUser = user;
 const userData = {
   firebaseUid: firebaseUser.uid,
   name: firebaseUser.displayName || '',
@@ -78,6 +78,7 @@ const userData = {
   } catch (err) {
     console.error("Google login error:", err);
   }
+  navigate('/home');
 };
 
   return (
