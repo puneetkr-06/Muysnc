@@ -3,6 +3,12 @@ const dotenv = require('dotenv');
 require("dotenv").config();
 const app = express();
 const cors = require('cors');
+app.use(cors({
+  origin: ['https://muysnc.onrender.com',
+    'http://localhost:5173'  
+  ]
+}));
+
 const axios = require("axios");
 const connectToDb = require('./db/db');
 app.use(express.json());
@@ -14,11 +20,7 @@ connectToDb();
 app.get('/', (req,res)=> {
   res.send("Hello World");
 })
-app.use(cors({
-  origin: ['https://muysnc.onrender.com',
-    'http://localhost:5173'  
-  ]
-}));
+
 
 
 app.use('/user',userRoutes);
