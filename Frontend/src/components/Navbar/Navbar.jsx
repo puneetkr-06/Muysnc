@@ -54,7 +54,7 @@ const Navbar = ({ query, setQuery, setSearchResults }) => {
   const handleLogout = async () => {
   try {
     await signOut(auth);
-    // Redirect to login or home
+    localStorage.removeItem("musync-user");
     navigate("/login");
   } catch (error) {
     console.error("Logout Error:", error.message);

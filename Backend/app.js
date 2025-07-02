@@ -15,7 +15,9 @@ app.get('/', (req,res)=> {
   res.send("Hello World");
 })
 app.use(cors({
-  origin: 'https://muysnc.onrender.com'  
+  origin: ['https://muysnc.onrender.com',
+    'http://localhost:5173'  
+  ]
 }));
 
 
