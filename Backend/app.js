@@ -6,7 +6,8 @@ const cors = require('cors');
 app.use(cors({
   origin: ['https://muysnc.onrender.com',
     'http://localhost:5173'  
-  ]
+  ],
+  credentials: true
 }));
 
 const axios = require("axios");
