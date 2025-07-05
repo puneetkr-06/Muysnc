@@ -23,10 +23,23 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    const { firebaseUid } = req.body;
-    const user = await User.findOne({ firebaseUid });
+    const { firebaseUid, name, email, photoURL } = req.body;
+    let user = await User.findOne({ firebaseUid });
 
-    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!user) {
+      if (!email) {
+        return res.status(400).json({ message: "User not found. Please register first." });
+      }
+
+      const newUser = await User.create({
+        firebaseUid,
+        name: name || email.split('@')[0], // Use email prefix if no name provided
+        email,
+        photoURL,
+      });
+
+      return res.status(201).json({ message: "User registered", user: newUser });
+    }
 
     res.status(200).json({ message: "Login successful", user });
   } catch (err) {

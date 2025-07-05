@@ -53,30 +53,27 @@ const userData = {
   }
 
   const handleGoogleLogin = async () => {
-  try {
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
 
-    if (!user) throw new Error("No user returned from Google");
+      if (!user) throw new Error("No user returned from Google");
 
-const firebaseUser = user;
-const userData = {
-  firebaseUid: firebaseUser.uid,
-  name: firebaseUser.displayName || '',
-  email: firebaseUser.email,
-  photoURL: firebaseUser.photoURL || '',
-};
-
-    
-    const res = await axios.post(`${BASE_URL}/user/login`, userData);
-
-    
-    localStorage.setItem("musync-user", JSON.stringify(res.data.user));
-  } catch (err) {
-    console.error("Google login error:", err);
-  }
-  navigate('/home');
-};
+      const firebaseUser = user;
+      const userData = {
+        firebaseUid: firebaseUser.uid,
+        name: firebaseUser.displayName || '',
+        email: firebaseUser.email,
+        photoURL: firebaseUser.photoURL || '',
+      };
+      
+      const res = await axios.post(`${BASE_URL}/user/login`, userData);
+      localStorage.setItem("musync-user", JSON.stringify(res.data.user));
+      navigate('/home');
+    } catch (err) {
+      console.error("Google login error:", err);
+    }
+  };
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-[#0e121b] via-[#0e0f14] to-[#272a34] flex flex-col gap-8'>
