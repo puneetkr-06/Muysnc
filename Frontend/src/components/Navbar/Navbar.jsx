@@ -70,7 +70,7 @@ const Navbar = ({ query, setQuery, setSearchResults }) => {
 
     try {
     const res = await axios.get(`${BASE_URL}/musync/search?query=${query}`);
-    const filteredTracks = res.data.tracks.filter(track => track.preview_url);
+    const filteredTracks = res.data.tracks;
     setSearchResults(filteredTracks);
     } catch (err) {
       console.error("Search failed", err);

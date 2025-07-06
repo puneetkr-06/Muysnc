@@ -55,7 +55,8 @@ const SongSlider = ({ title, songs , setCurrentSong}) => {
         </div>
 
 </div>
-      <h3 className="text-sm md:text-base font-semibold md:font-bold truncate">{truncateText(song.name)}</h3>
+      <h3 className="text-sm md:text-base font-semibold md:font-bold truncate">{truncateText(song.name)}
+</h3>
       <p className="text-xs md:text-sm text-gray-400">  {truncateText(
     Array.isArray(song.artists)
       ? song.artists.join(", ")

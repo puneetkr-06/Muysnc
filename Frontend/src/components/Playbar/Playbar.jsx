@@ -32,9 +32,12 @@ const Playbar = ({ song }) => {
   const truncateText = (input, maxLength = 25) => {
     if (!input) return "";
     const text = Array.isArray(input) ? input.join(", ") : input;
-    return typeof text === "string" && text.length > maxLength
-      ? text.slice(0, maxLength) + "..."
-      : text;
+
+ const decoded = text.replace(/&amp;/g, "&");
+
+  return decoded.length > maxLength
+    ? decoded.slice(0, maxLength) + "..."
+    : decoded;
   };
 
   useEffect(() => {

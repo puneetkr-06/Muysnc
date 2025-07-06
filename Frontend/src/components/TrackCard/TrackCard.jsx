@@ -7,21 +7,24 @@ const TrackCard = ({ track , setCurrentSong }) => {
 
   if (!track) return null;
 
-  const truncateText = (input, maxLength = 25) => {
+const truncateText = (input, maxLength = 25) => {
   if (!input) return "";
 
   const text = Array.isArray(input) ? input.join(", ") : input;
 
-  return typeof text === 'string' && text.length > maxLength
-    ? text.slice(0, maxLength) + "..."
-    : text;
+  const decoded = text.replace(/&amp;/g, "&");
+
+  return decoded.length > maxLength
+    ? decoded.slice(0, maxLength) + "..."
+    : decoded;
 };
+
   return (
     <div className="relative group bg-[#1e1e1e] rounded-xl p-3 text-white hover:scale-105 transition-transform duration-300 shadow-md cursor-pointer w-full">
     
                   <div className='relative'>
           <img
-            src={track.album?.images[0]?.url}
+            src={track.image?.url || track.image}
             alt={track.name}
             className="w-full h-32 md:h-44 object-cover rounded-lg mb-3"
           />
@@ -47,7 +50,7 @@ const TrackCard = ({ track , setCurrentSong }) => {
     
     </div>
           <h3 className="text-sm md:text-base font-semibold md:font-bold truncate">{truncateText(track.name)}</h3>
-          <p className="text-xs md:text-sm text-gray-400">{truncateText(track.artists.map((a) => a.name))}</p>
+          <p className="text-xs md:text-sm text-gray-400">{truncateText(track.artists)}</p>
         </div>
     
   );
