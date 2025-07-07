@@ -17,6 +17,7 @@ const Signup = () => {
     password: '',
     confirmPassword: ''
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({...formData, [e.target.name]: e.target.value });
@@ -28,7 +29,7 @@ const handleSubmit = async (e) => {
     alert("Passwords do not match");
     return;
   }
-
+   setLoading(true);
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -51,6 +52,7 @@ await axios.post(`${BASE_URL}/user/register`, userData)
   .then((res) => {
     const user = res.data.user; 
     localStorage.setItem("musync-user", JSON.stringify(user)); 
+    setLoading(false);
     navigate('/home')
   });
   } catch (error) {
@@ -66,6 +68,8 @@ const handleGoogleSignup = async () => {
 
     if (!user) throw new Error("No user returned from Google");
 
+    setLoading(true);
+
     const userData = {
       firebaseUid: user.uid,
       name: user.displayName,
@@ -77,6 +81,7 @@ await axios.post(`${BASE_URL}/user/register`, userData)
   .then((res) => {
     const user = res.data.user; 
     localStorage.setItem("musync-user", JSON.stringify(user)); 
+    setLoading(false);
     navigate("/home");
   });
   } catch (error) {
@@ -93,6 +98,12 @@ await axios.post(`${BASE_URL}/user/register`, userData)
                < FaCompactDisc  className='text-[#EB6C18] bold text-3xl mr-2 animate-spin'/>
                <h1 className='text-[#EB6C18] text-3xl font-ibm font-bold justify-center items-center hidden sm:block'>Musync</h1>
               </div>
+
+              {loading ? (
+      <div className="flex justify-center items-center flex-1">
+        <div className="h-12 w-12 border-4 border-white border-t-[#EB6C18] rounded-full animate-spin"></div>
+      </div>
+    ) : (
 
     <div className="flex items-center justify-center text-white px-4">
 
@@ -164,6 +175,7 @@ await axios.post(`${BASE_URL}/user/register`, userData)
         </p>
       </div>
     </div>
+    )}
     </div>
   );
 };

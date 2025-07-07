@@ -67,9 +67,10 @@ const userData = {
         email: firebaseUser.email,
         photoURL: firebaseUser.photoURL || '',
       };
-      
+      setLoading(true);
       const res = await axios.post(`${BASE_URL}/user/login`, userData);
       localStorage.setItem("musync-user", JSON.stringify(res.data.user));
+      setLoading(true);
       navigate('/home');
     } catch (err) {
       console.error("Google login error:", err);
