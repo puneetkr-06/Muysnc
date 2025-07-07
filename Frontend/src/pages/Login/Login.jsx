@@ -14,6 +14,7 @@ import {BASE_URL} from "../../utils/config"
 const Login = () => {
 
   const navigate = useNavigate();
+  const[loading,setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     email: '',
@@ -37,7 +38,7 @@ const userData = {
   email: firebaseUser.email,
   photoURL: firebaseUser.photoURL || '',
 };
-
+     setLoading(true);
     axios.post(`${BASE_URL}/user/login`, userData)
       .then((res) => {
         const user = res.data.user;
@@ -45,7 +46,7 @@ const userData = {
       })
       .catch((err) => console.error("Register Error", err));
 
-
+      setLoading(false);
       navigate("/home");
     } catch (error) {
       console.error("Login error:", error.message);
@@ -83,6 +84,12 @@ const userData = {
         < FaCompactDisc  className='text-[#EB6C18] bold text-3xl mr-2 animate-spin'/>
         <h1 className='text-[#EB6C18] text-3xl font-ibm font-bold hidden sm:block'>Musync</h1>
       </div>
+
+          {loading ? (
+      <div className="flex justify-center items-center flex-1">
+        <div className="h-12 w-12 border-4 border-white border-t-[#EB6C18] rounded-full animate-spin"></div>
+      </div>
+    ) : (
 
       <div className="flex items-center justify-center text-white px-4">
         <div className="w-full max-w-md bg-[#1e1e1e] p-8 rounded-2xl shadow-lg border border-gray-800">
@@ -135,6 +142,7 @@ const userData = {
           </p>
         </div>
       </div>
+    )}
     </div>
   );
 };
