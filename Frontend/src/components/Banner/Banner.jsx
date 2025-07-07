@@ -24,6 +24,7 @@ const truncateText = (input, maxLength = 25) => {
 const Banner = ({setCurrentSong}) => {
   const user = JSON.parse(localStorage.getItem("musync-user"));
   const [trending, setTrending] = useState([]);
+  const [apiLoading, setApiLoading] = useState(true);
   const swiperRef = useRef(null);
 
   useEffect(() => {
@@ -31,24 +32,22 @@ const Banner = ({setCurrentSong}) => {
       try {
         const res = await axios.get(`${BASE_URL}/musync/trending`);
         setTrending(res.data.trending);
-        
+        setApiLoading(false);
       } catch (err) {
         console.error("Failed to load trending songs", err);
-
-            try {
-      const fallbackRes = await axios.get("https://raw.githubusercontent.com/puneetkr-06/MUSYNC-API/main/trending/trendingSongs.json");
-
-      setTrending(fallbackRes.data);
-
-    } catch (fallbackError) {
-      console.error("🔥 GitHub fallback failed too:", fallbackError.message);
-    }
       }
     };
     fetchTrending();
   }, []);
 
   return (
+  <>
+    {apiLoading ? (
+      <div className="flex items-center justify-center h-screen">
+        <div className="h-10 w-10 border-4 border-t-orange-500 border-white rounded-full animate-spin"></div>
+      </div>
+    ) : (
+
     <div>
       <h1 className="font-ibm font-bold text-xl md:text-2xl text-white pl-6">Trending Now !</h1>
       <div className="w-full px-4 py-4">
@@ -97,8 +96,8 @@ const Banner = ({setCurrentSong}) => {
                   />
                 </div>
                                   <button
-                    className="mt-2 md:mt-6  sm:ml-6 
-                   sm:mt-6 sm:mb-2 xl:px-8 xl:text-xl bg-[#EB6C18] px-4 py-2 rounded-full text-white hover:bg-orange-600 transition font-medium "
+                    className="mt-2 mb-2 md:mt-6  sm:ml-6 px-4 py-1
+                   sm:mt-6 sm:mb-2 xl:px-8 xl:text-xl bg-[#EB6C18] md:px-4 md:py-2 rounded-full text-white hover:bg-orange-600 transition font-medium "
                     onClick={() => {
                       if (item.preview_url) {              
                         setCurrentSong(item);
@@ -119,6 +118,8 @@ const Banner = ({setCurrentSong}) => {
         </Swiper>
       </div>
     </div>
+        )}
+  </>
   );
 };
 

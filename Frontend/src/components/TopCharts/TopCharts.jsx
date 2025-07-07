@@ -15,15 +15,6 @@ const TopCharts = ({setCurrentSong}) => {
         setCharts(res.data.topCharts || []);
       } catch (err) {
         console.error("Failed to fetch Top Charts:", err);
-
-                    try {
-      const fallbackRes = await axios.get("https://raw.githubusercontent.com/puneetkr-06/MUSYNC-API/main/topCharts/topChartsSongs.json");
-
-      setCharts(fallbackRes.data);
-
-    } catch (fallbackError) {
-      console.error("🔥 GitHub fallback failed too:", fallbackError.message);
-    }
       }
     };
 

@@ -31,6 +31,16 @@ const getTrendingTracks = async (req, res) => {
 
     res.status(200).json({ trending });
   } catch (err) {
+
+      try {
+      const fallbackRes = await axios.get("https://raw.githubusercontent.com/puneetkr-06/MUSYNC-API/main/trending/trendingSongs.json");
+
+      res.status(200).json({ trending : fallbackRes.data });
+
+    } catch (fallbackError) {
+      console.error("🔥 GitHub fallback failed too:", fallbackError.message);
+    }
+
     console.error("Spotify Trending Error:", err.message);
     res.status(500).json({ error: "Failed to fetch trending songs" });
   }

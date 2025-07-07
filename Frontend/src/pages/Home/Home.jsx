@@ -14,10 +14,15 @@ import { auth } from '../../firebase/firebase';
 import { Navigate } from 'react-router-dom';
 
 const Home = () => {
+  const [user,loading] = useAuthState(auth);
 
-    const [user, loading] = useAuthState(auth);
-
-  if (loading) return <div className="text-white p-10">Loading...</div>;
+   if (loading) {
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-orange-500 border-opacity-60"></div>
+    </div>
+  );
+}
 
   if (!user) {
     alert("Please login to continue");

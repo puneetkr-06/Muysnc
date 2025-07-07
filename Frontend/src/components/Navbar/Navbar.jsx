@@ -62,10 +62,10 @@ const Navbar = ({ query, setQuery, setSearchResults }) => {
   }
 };
 
-
+const [apiLoading, setApiLoading] = useState(false); 
   const handleSearch = async () => {
     if (!query) return;
-
+    setApiLoading(true);
     window.history.pushState({}, '', `?search=${encodeURIComponent(query)}`);
 
     try {
@@ -74,7 +74,9 @@ const Navbar = ({ query, setQuery, setSearchResults }) => {
     setSearchResults(filteredTracks);
     } catch (err) {
       console.error("Search failed", err);
-    }
+    } finally {
+    setApiLoading(false); 
+  }
   };
 
   return (
@@ -91,6 +93,11 @@ const Navbar = ({ query, setQuery, setSearchResults }) => {
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSearch()}
         />
+       {apiLoading && (
+       <div className="absolute top-2 right-4">
+       <div className="h-5 w-5 border-2 border-t-orange-500 border-white rounded-full animate-spin"></div>
+       </div>
+)}
       </div>
 
   <div className="relative ml-6 -mt-2">

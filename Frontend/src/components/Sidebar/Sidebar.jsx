@@ -20,7 +20,7 @@ export const sidebarLinksBottom = [
 const Sidebar = ({setSearchResults , setQuery}) => {
   return (
 
-    <div className='bg-[rgb(24,27,33)] w-16 sm:w-40 md:w-48 xl:w-64 h-screen fixed top-0 left-0 rounded-4xl flex flex-col items-center'>
+    <div className='bg-[rgb(24,27,33)] w-16 sm:w-40 md:w-48 xl:w-64 h-screen fixed top-0 left-0 rounded-r-4xl flex flex-col items-center'>
        <div className='flex p-4 justify-center items-center mt-2'>
         < FaCompactDisc  className='text-[#EB6C18] bold text-3xl mr-2 animate-spin'/>
         <h1 className='text-[#EB6C18] text-3xl font-ibm font-bold justify-center items-center hidden sm:block'>Musync</h1>

@@ -40,6 +40,16 @@ const getTopArtists = async (req, res) => {
 
     res.status(200).json({ artists: formatted });
   } catch (error) {
+
+        try {
+              const fallbackRes = await axios.get("https://raw.githubusercontent.com/puneetkr-06/MUSYNC-API/main/topArtists/getTopArtists.json");
+        
+              res.status(200).json({ artists: fallbackRes.data.artists });
+        
+            } catch (fallbackError) {
+              console.error("🔥 GitHub fallback failed too:", fallbackError.message);
+            }
+
     console.error("Artist Spotlight API Error:", error.message);
     res.status(500).json({ error: "Failed to fetch artist spotlight data" });
   }

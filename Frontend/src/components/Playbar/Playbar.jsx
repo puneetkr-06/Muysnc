@@ -109,7 +109,7 @@ const Playbar = ({ song }) => {
 
       {isMobile ? (
       
-        <div className="flex items-center justify-between w-full ">
+        <div className="flex items-center justify-between w-full py-2">
           <div className="flex items-center gap-3">
             <img src={song.image || song.album?.images?.[0]?.url} alt="Song" className="w-10 h-10 rounded-lg" />
             <div>

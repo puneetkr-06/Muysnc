@@ -15,15 +15,6 @@ const BiggestHits = ({setCurrentSong}) => {
         sethits(res.data.biggestHits || []);
       } catch (err) {
         console.error("Failed to fetch Top Charts:", err);
-
-                            try {
-      const fallbackRes = await axios.get("https://raw.githubusercontent.com/puneetkr-06/MUSYNC-API/main/biggestHits/biggestHitsSongs.json");
-
-      sethits(fallbackRes.data);
-
-    } catch (fallbackError) {
-      console.error("🔥 GitHub fallback failed too:", fallbackError.message);
-    }
       }
     };
 
