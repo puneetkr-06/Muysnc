@@ -32,16 +32,30 @@ const truncateText = (input, maxLength = 25) => {
             <div className="absolute inset-0 bg-opacity-30 rounded-lg flex items-center justify-center opacity-100 group-hover:opacity-100 sm:opacity-0 transition">
               <button className="bg-[#EB6C18] text-white p-3 rounded-full items-center hover:scale-110 transition"
                 onClick={async () => {
-    const storedUser = JSON.parse(localStorage.getItem("musync-user"));
-    const userId = storedUser?._id;
-    if (!userId) return;
+    console.log('TrackCard: Play button clicked for track:', track);
+    
+    // Check if track has required fields for playback
+    if (!track.preview_url) {
+      alert('Sorry, this song is not available for preview.');
+      console.error('Track missing preview_url:', track);
+      return;
+    }
 
-    setCurrentSong(track);
     try {
-      await updateRecentlyPlayed(userId, track);
+      const storedUser = localStorage.getItem("musync-user");
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        const userId = user?._id;
+        if (userId) {
+          await updateRecentlyPlayed(userId, track);
+        }
+      }
     } catch (err) {
       console.error("Failed to update recently played", err);
     }
+
+    console.log('TrackCard: Setting current song...');
+    setCurrentSong(track);
   }}>
                 <FaPlay className="text-md text-white" />
                 

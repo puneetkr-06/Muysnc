@@ -1,4 +1,4 @@
-import {React, useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import { Link } from "react-router-dom";
 import { FiSearch } from 'react-icons/fi';
 import { MdArrowDropDown, MdLogout, MdAccountCircle } from 'react-icons/md';
@@ -9,11 +9,11 @@ import {signOut} from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {BASE_URL} from "../../utils/config";
-import { SiNeteasecloudmusic } from "react-icons/si";
+import { getSongsByMood } from '../../utils/openapi';
 
 
 
-const Navbar = ({ query, setQuery, setSearchResults,setCurrentSong ,searchResults}) => {
+const AiPageNavbar = ({ query, setQuery, setSearchResults }) => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState(null);
@@ -65,21 +65,53 @@ const Navbar = ({ query, setQuery, setSearchResults,setCurrentSong ,searchResult
 };
 
 const [apiLoading, setApiLoading] = useState(false); 
-  const handleSearch = async () => {
-    if (!query) return;
-    setApiLoading(true);
-    window.history.pushState({}, '', `?search=${encodeURIComponent(query)}`);
 
-    try {
-    const res = await axios.get(`${BASE_URL}/musync/search?query=${query}`);
-    const filteredTracks = res.data.tracks;
-    setSearchResults(filteredTracks);
-    } catch (err) {
-      console.error("Search failed", err);
-    } finally {
-    setApiLoading(false); 
+const handleSearch = async () => {
+  if (!query.trim()) {
+    alert('Please enter a mood or feeling to search for music');
+    return;
   }
-  };
+  
+  setApiLoading(true);
+  console.log('=== Starting AI Music Search ===');
+  console.log('Query:', query);
+  
+  try {
+    // First test the backend directly
+    console.log('Testing backend connection...');
+    const testRes = await axios.get(`${BASE_URL}/musync/aisearch?query=test`);
+    console.log('Backend test response:', testRes.data);
+    
+    console.log('Calling getSongsByMood with Gemini API...');
+    const results = await getSongsByMood(query);
+    console.log('Final AI search results:', results);
+    
+    if (results.length === 0) {
+      alert('No songs found for this mood. The service might be temporarily unavailable. Please try again later or try a different mood description.');
+    } else {
+      console.log(`Found ${results.length} songs, setting search results...`);
+      setSearchResults(results);
+    }
+  } catch (err) {
+    console.error("Search failed:", err);
+    
+    // More detailed error message
+    if (err.response) {
+      console.error('Backend error:', err.response.data);
+      alert(`Search failed: ${err.response.data.error || 'Backend error'}. Please try again.`);
+    } else if (err.request) {
+      console.error('Network error - no response received');
+      alert('Network error: Could not connect to the server. Please check if the backend is running on http://localhost:4000');
+    } else {
+      console.error('Unexpected error:', err.message);
+      alert(`Unexpected error: ${err.message}. Please try again.`);
+    }
+  } finally {
+    setApiLoading(false);
+  }
+};
+
+
 
   return (
     <div className='fixed top-4 left-16 sm:left-40 md:left-64 right-0 px-6 pt-2 z-50 flex justify-between' ref={dropdownRef}>
@@ -89,14 +121,14 @@ const [apiLoading, setApiLoading] = useState(false);
         </span>
         <input
           type="text"
-          placeholder="Search songs, artists, albums..."
-          className="w-full pl-10 pr-4 py-2 rounded-xl bg-[#1e1e1e] text-white ring-2 ring-[#EB6C18] outline-none"
+          placeholder="Describe the moment... we’ll match the music"
+          className="w-full pl-10 pr-4 py-4 rounded-xl bg-[#1e1e1e] text-white ring-2 ring-[#EB6C18] outline-none"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSearch()}
         />
        {apiLoading && (
-       <div className="absolute top-2 right-4">
+       <div className="absolute top-1/2 right-4 transform -translate-y-1/2">
        <div className="h-5 w-5 border-2 border-t-orange-500 border-white rounded-full animate-spin"></div>
        </div>
 )}
@@ -104,11 +136,7 @@ const [apiLoading, setApiLoading] = useState(false);
 
 
   <div className="relative ml-6 -mt-2 flex items-center gap-5">
-    <div>
-      <Link to='/aimusicsuggestion'>
-       <SiNeteasecloudmusic query={query} setQuery={setQuery} setSearchResults={setSearchResults} setCurrentSong={setCurrentSong} searchResults={searchResults} className="text-[#EB6C18] animate-pulse" size={28} />
-      </Link>
-    </div>
+
         <div
           className="flex items-center gap-3 cursor-pointer"
           onClick={() => setIsOpen(!isOpen)}
@@ -152,4 +180,4 @@ const [apiLoading, setApiLoading] = useState(false);
   )
 }
 
-export default Navbar
+export default AiPageNavbar

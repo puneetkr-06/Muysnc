@@ -8,6 +8,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import {BASE_URL} from "../../utils/config"
+import { useAuth } from "../../firebase/AuthContext";
 
 const truncateText = (input, maxLength = 25) => {
   if (!input) return "";
@@ -22,7 +23,7 @@ const truncateText = (input, maxLength = 25) => {
 };
 
 const Banner = ({setCurrentSong}) => {
-  const user = JSON.parse(localStorage.getItem("musync-user"));
+  const { user } = useAuth();
   const [trending, setTrending] = useState([]);
   const [apiLoading, setApiLoading] = useState(true);
   const swiperRef = useRef(null);

@@ -57,7 +57,7 @@ const Home = () => {
 
       {/* Right part */}
       <div className='ml-16 sm:ml-40 md:ml-48 xl:ml-64 min-h-screen flex-1 pt-20'>
-        <Navbar query={query} setQuery={setQuery} setSearchResults={setSearchResults}></Navbar>
+        <Navbar query={query} setQuery={setQuery} setSearchResults={setSearchResults} setCurrentSong={setCurrentSong} searchResults = {searchResults}></Navbar>
 
         <div > 
   {searchResults.length > 0 ? (
