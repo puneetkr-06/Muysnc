@@ -52,9 +52,6 @@ const Moodsync = ({ query, setQuery, searchResults, setSearchResults, setCurrent
         <div className="text-center text-gray-400 mt-8">
           <p>Use the search bar above to describe your current mood or feeling.</p>
           <p className="text-sm mt-2">Example: "I'm feeling happy and energetic" or "I want something calm and relaxing"</p>
-          <div className="mt-4 text-xs text-gray-500">
-            Debug: Query = "{query || 'empty'}", Results = {searchResults?.length || 0}
-          </div>
         </div>
       )}
     </div>
