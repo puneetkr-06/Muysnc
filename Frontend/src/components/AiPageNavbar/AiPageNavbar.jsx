@@ -122,7 +122,7 @@ const handleSearch = async () => {
         <input
           type="text"
           placeholder="Describe the moment... we’ll match the music"
-          className="w-full pl-10 pr-4 py-4 rounded-xl bg-[#1e1e1e] text-white ring-2 ring-[#EB6C18] outline-none"
+          className="w-full pl-10 pr-4 py-2 rounded-xl bg-[#1e1e1e] text-white ring-2 ring-[#EB6C18] outline-none"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSearch()}

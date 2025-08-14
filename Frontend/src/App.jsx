@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Routes , Route } from 'react-router-dom'
+import { Routes , Route, Navigate } from 'react-router-dom'
 import Landing from './pages/Landing/Landing'
 import Home from './pages/Home/Home'
 import Login from './pages/Login/Login'
@@ -30,6 +30,8 @@ const App = () => {
           setCurrentSong={setCurrentSong}
         />
       }/>
+      {/* Catch-all route for 404 pages */}
+      <Route path='*' element={<Navigate to="/" replace />} />
      </Routes>
     </div>
   )

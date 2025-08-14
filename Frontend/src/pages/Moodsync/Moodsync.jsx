@@ -3,8 +3,27 @@ import Sidebar from '../../components/Sidebar/Sidebar'
 import AiPageNavbar from '../../components/AiPageNavbar/AiPageNavbar'
 import TrackCard from '../../components/TrackCard/TrackCard'
 import Playbar from '../../components/Playbar/Playbar'
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../firebase/firebase';
+import { Navigate } from 'react-router-dom';
 
 const Moodsync = ({ query, setQuery, searchResults, setSearchResults, setCurrentSong, currentSong }) => {
+  const [user, loading] = useAuthState(auth);
+
+  // Show loading spinner while checking authentication
+  if (loading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-orange-500 border-opacity-60"></div>
+      </div>
+    );
+  }
+
+  // Redirect to login if not authenticated
+  if (!user) {
+    alert("Please login to continue");
+    return <Navigate to="/login" replace />;
+  }
 
   // Debug logging
   useEffect(() => {
@@ -39,7 +58,7 @@ const Moodsync = ({ query, setQuery, searchResults, setSearchResults, setCurrent
       <div className='ml-16 sm:ml-40 md:ml-48 xl:ml-64 min-h-screen flex-1 pt-20'>
         <AiPageNavbar query={query} setQuery={setQuery} setSearchResults={setSearchResults}/>
       <div className="pb-24 px-4">
-      <h2 className="text-sm font-medium md:text-xl md:font-semibold mb-4 text-white">
+      <h2 className="text-sm font-medium md:text-xl md:font-semibold mx-4 text-white">
         {searchResults && searchResults.length > 0 ? 'AI Music Suggestions' : 'Describe your mood to get music suggestions'}
       </h2>
       {searchResults && searchResults.length > 0 ? (

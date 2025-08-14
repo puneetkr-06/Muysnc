@@ -5,11 +5,18 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(),tailwindcss()],
-    server: {
+  server: {
     host: '0.0.0.0',
     host: true, 
     cors: true,
-    port: 5173 
+    port: 5173,
+    // Fix for React Router refresh issue
+    historyApiFallback: true
   },
- 
+  // Also add for production builds
+  preview: {
+    host: true,
+    port: 5173,
+    historyApiFallback: true
+  }
 })
